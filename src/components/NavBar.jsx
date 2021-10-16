@@ -1,11 +1,13 @@
 import CartWidget from "./CartWidget";
 const NavBar = () => (
   <nav className="navbar mb-2 shadow-lg">
-    <h1 className="text-xl font-bold ml-2">
-      <span className="text-primary">U</span>SELECT
+    <h1 className="flex-1 text-xl font-bold ml-2">
+      <a href="/">
+        <span className="text-primary">U</span>SELECT
+      </a>
     </h1>
 
-    <div className="flex-1 items-stretch px-2 mx-2">
+    <div className="flex-none items-stretch px-2 mx-2">
       <a href="/home" className="btn btn-ghost btn-sm rounded-btn">
         Home
       </a>

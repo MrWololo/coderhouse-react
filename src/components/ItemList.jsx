@@ -97,7 +97,7 @@ const ItemList = () => {
           isLoading ? "flex" : "hidden"
         } justify-center items-center m-10`}
       >
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary"></div>
       </div>
       <div className="customColumn m-2">
         {products.map((product) => {

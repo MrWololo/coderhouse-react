@@ -1,41 +1,38 @@
 import { useEffect, useState } from "react";
 import { getItems } from "../modules/Items";
 import ItemList from "../components/ItemList";
+import Loading from "../components/Loading";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
 
 const ItemListContainer = ({ greeting }) => {
+  const { category } = useParams();
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchProducts = () =>
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        return resolve(getItems());
-      }, 2000);
-    });
-
   useEffect(() => {
+    const fetchProducts = () =>
+      new Promise((resolve, reject) => {
+        setIsLoading(true);
+        setTimeout(() => {
+          return resolve(getItems(category));
+        }, 2000);
+      });
+
     fetchProducts().then((newProducts) => {
       setProducts(newProducts);
       setIsLoading(false);
     });
-  }, []);
+  }, [category]);
 
   return (
-    <div className="container mx-2 sm:m-auto text-center">
+    <div className="mx-2 sm:m-auto text-center max-w-7xl">
       {greeting || (
         <h2>
           A curated selection of useless items made for{" "}
           <span className="text-primary primary font-semibold">U</span>
         </h2>
       )}
-      <div
-        className={`${
-          isLoading ? "flex" : "hidden"
-        } justify-center items-center m-10`}
-      >
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary"></div>
-      </div>
-      <ItemList products={products} />
+      {isLoading ? <Loading /> : <ItemList products={products} />}
     </div>
   );
 };

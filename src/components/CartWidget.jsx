@@ -1,9 +1,10 @@
-import { FiShoppingCart } from "react-icons/fi";
+// import { FiShoppingCart } from "react-icons/fi";
 
 const CartWidget = () => (
-  <button className="btn btn-ghost btn-sm sm:btn-primary sm:mx-2 sm:w-20">
-    <FiShoppingCart />
-    <span className="sm:inline hidden">cart</span>
+  <button className="flex-1 justify-evenly btn btn-sm btn-primary mx-2 px-4">
+    {/* <FiShoppingCart /> */}
+    {/* <div className="mx-1"/> */}
+    <p>cart</p>
   </button>
 );
 

@@ -4,8 +4,6 @@ import { useState } from "react";
 const DarkFAB = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
 
-  console.log(theme);
-
   return (
     <button
       data-set-theme={theme !== "bumblebee" ? "bumblebee" : "dracula"}

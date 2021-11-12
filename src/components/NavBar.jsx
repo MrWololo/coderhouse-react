@@ -2,7 +2,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom";
 import NavbarItems from "./NavbarItems";
 
 const NavBar = () => (
-  <nav className="navbar mb-2 shadow-lg">
+  <nav className="navbar mb-2 shadow-lg sticky top-0 z-50 bg-base-100">
     <h1 className="flex-1 text-xl font-bold mx-2">
       <Link to={"/"}>
         <span className="text-primary">U</span>SELECT

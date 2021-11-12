@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 // import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { BsDash, BsPlus } from "react-icons/bs";
+import { CartContext } from "../context/CartContext";
 
-const Item = ({ title, description, price, imageSRC, fullyShown = true }) => {
+const Item = ({ item, fullyShown = true }) => {
+  const { title, description, price, imageSRC } = item;
+
   const [active, setActive] = useState(false);
+  // const []
   const [quantity, setQuantity] = useState(1);
   const [calculatedPrice, setCalculatedPrice] = useState(price);
+
+  const { addCartItem } = useContext(CartContext);
 
   const quantityMinus = () => {
     if (quantity !== 1) {
@@ -25,7 +31,12 @@ const Item = ({ title, description, price, imageSRC, fullyShown = true }) => {
   return (
     <div
       className={`group max-w-5xl ${fullyShown ? "sm:m-auto" : "mb-2"}`}
-      onTouchEnd={() => setActive(!active)}
+      onTouchEnd={(e) => {
+        if (!active) {
+          e.preventDefault();
+          setActive(!active);
+        }
+      }}
       onMouseEnter={() => setActive(fullyShown ? false : true)}
       onMouseLeave={() => setActive(false)}
     >
@@ -59,7 +70,15 @@ const Item = ({ title, description, price, imageSRC, fullyShown = true }) => {
               <div className={`btn-group ${fullyShown ? "" : "hidden"}`}>
                 <button
                   className="btn btn-secondary rounded-b-none "
-                  onClick={quantityMinus}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    quantityMinus();
+                  }}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    quantityMinus();
+                  }}
                 >
                   <BsDash />
                 </button>
@@ -68,7 +87,15 @@ const Item = ({ title, description, price, imageSRC, fullyShown = true }) => {
                 </button>
                 <button
                   className="btn btn-secondary rounded-b-none"
-                  onClick={quantityPlus}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    quantityPlus();
+                  }}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    quantityPlus();
+                  }}
                 >
                   <BsPlus />
                 </button>
@@ -77,6 +104,12 @@ const Item = ({ title, description, price, imageSRC, fullyShown = true }) => {
                 className={`btn btn-primary ${
                   fullyShown ? "rounded-t-none" : ""
                 }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (addCartItem(item, quantity)) {
+                  }
+                }}
+                onTouchEnd={() => addCartItem(item, quantity)}
               >
                 Add to cart
               </button>

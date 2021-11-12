@@ -96,3 +96,7 @@ export function getItem(itemID) {
 export function getItemsIDs() {
   return items.map((item) => item.id);
 }
+
+export function getItemsCategories() {
+  return items.map((item) => item.category);
+}

@@ -9,15 +9,7 @@ const ItemList = ({ products }) => {
       {products.map((product) => {
         return (
           <Link to={`/item/${product.id}`}>
-            <Item
-              key={product}
-              imageSRC={product.imageSRC}
-              description={product.description}
-              title={product.title}
-              id={product.id}
-              price={product.price}
-              fullyShown={false}
-            />
+            <Item key={product.id} item={product} fullyShown={false} />
           </Link>
         );
       })}

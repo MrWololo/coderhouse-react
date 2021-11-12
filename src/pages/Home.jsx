@@ -8,7 +8,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { themeChange } from "theme-change";
 import NavbarItems from "../components/NavbarItems.jsx";
-import { getItemsIDs } from "../modules/Items.js";
+import { getItemsIDs, getItemsCategories } from "../modules/Items.js";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
 const Home = () => {
@@ -17,13 +17,14 @@ const Home = () => {
   }, []);
 
   const itemsIDs = getItemsIDs();
+  const itemsCategories = getItemsCategories();
 
   return (
     <BrowserRouter>
       <div className="drawer h-screen drawer-end">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
-          <NavBar />
+          <NavBar/>
           <Switch>
             <Route exact path="/" component={ItemListContainer} />
             <Route
@@ -40,7 +41,20 @@ const Home = () => {
                 );
               }}
             />
-            <Route path="/categories/:category" component={ItemListContainer} />
+            <Route
+              path="/categories/:category"
+              render={({ location, match }) => {
+                return itemsCategories.find(
+                  (category) => match.params["category"] === category
+                ) ? (
+                  <ItemListContainer />
+                ) : (
+                  <Redirect
+                    to={{ pathname: "/404", state: { from: location } }}
+                  />
+                );
+              }}
+            />
             <Route path="*" component={FourOhFour} />
           </Switch>
           <DarkFAB />

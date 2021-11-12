@@ -1,17 +1,22 @@
 import DarkFAB from "../components/DarkFAB.jsx";
 import NavBar from "../components/NavBar.jsx";
-import ItemListContainer from "../container/ItemListContainer.jsx";
-import ItemDetailContainer from "../container/ItemDetailContainer.jsx";
+import ItemListContainer from "../containers/ItemListContainer.jsx";
+import ItemDetailContainer from "../containers/ItemDetailContainer.jsx";
+import FourOhFour from "../containers/FourOhFour.jsx";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import { useEffect } from "react";
 import { themeChange } from "theme-change";
 import NavbarItems from "../components/NavbarItems.jsx";
+import { getItemsIDs } from "../modules/Items.js";
+import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
 const Home = () => {
   useEffect(() => {
     themeChange(false);
   }, []);
+
+  const itemsIDs = getItemsIDs();
 
   return (
     <BrowserRouter>
@@ -21,8 +26,22 @@ const Home = () => {
           <NavBar />
           <Switch>
             <Route exact path="/" component={ItemListContainer} />
-            <Route path="/item/:id" component={ItemDetailContainer} />
+            <Route
+              path="/item/:id"
+              render={({ location, match }) => {
+                return itemsIDs.find(
+                  (id) => parseInt(match.params["id"]) === id
+                ) ? (
+                  <ItemDetailContainer />
+                ) : (
+                  <Redirect
+                    to={{ pathname: "/404", state: { from: location } }}
+                  />
+                );
+              }}
+            />
             <Route path="/categories/:category" component={ItemListContainer} />
+            <Route path="*" component={FourOhFour} />
           </Switch>
           <DarkFAB />
         </div>

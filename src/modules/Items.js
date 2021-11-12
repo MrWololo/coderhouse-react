@@ -92,3 +92,7 @@ export function getItem(itemID) {
   // console.log(items.find((item) => item.id === parseInt(itemID)));
   return items.find((item) => item.id === parseInt(itemID));
 }
+
+export function getItemsIDs() {
+  return items.map((item) => item.id);
+}

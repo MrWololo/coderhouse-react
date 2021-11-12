@@ -13,7 +13,8 @@ const ItemDetailContainer = () => {
     const fetchItem = () =>
       new Promise((resolve, reject) => {
         setTimeout(() => {
-          return resolve(getItem(id));
+          const item = getItem(id)
+          return resolve(item);
         }, 2000);
       });
 
@@ -24,7 +25,7 @@ const ItemDetailContainer = () => {
   }, [id]);
 
   return (
-    <div className="mx-2 sm:m-auto text-center ">
+    <div className="mx-2 sm:m-auto text-center">
       {isLoading ? <Loading /> : <ItemDetail item={item} />}
     </div>
   );

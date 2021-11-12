@@ -10,6 +10,7 @@ import { themeChange } from "theme-change";
 import NavbarItems from "../components/NavbarItems.jsx";
 import { getItemsIDs, getItemsCategories } from "../modules/Items.js";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
+import CartContainer from "../containers/CartContainer.jsx";
 
 const Home = () => {
   useEffect(() => {
@@ -24,7 +25,7 @@ const Home = () => {
       <div className="drawer h-screen drawer-end">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
-          <NavBar/>
+          <NavBar />
           <Switch>
             <Route exact path="/" component={ItemListContainer} />
             <Route
@@ -55,6 +56,7 @@ const Home = () => {
                 );
               }}
             />
+            <Route path="/cart" component={CartContainer} />
             <Route path="*" component={FourOhFour} />
           </Switch>
           <DarkFAB />

@@ -10,6 +10,8 @@ const images = importAll(
   require.context("../images", false, /\.(png|jpe?g|svg)$/)
 );
 
+//No database, hacky solutions
+
 const items = [
   {
     title: "Hamofa",
@@ -18,6 +20,7 @@ const items = [
     price: 5700,
     imageSRC: images["chanchofa.jpg"].default,
     category: "slightly",
+    stock: 9,
   },
   {
     title: "Feetfeet",
@@ -26,6 +29,7 @@ const items = [
     price: 850,
     imageSRC: images["patapatas.jpg"].default,
     category: "slightly",
+    stock: 4,
   },
   {
     title: "Peephole",
@@ -34,6 +38,7 @@ const items = [
     price: 265,
     imageSRC: images["mirilla.jpg"].default,
     category: "completely",
+    stock: 20,
   },
   {
     title: "Racing lawnmower",
@@ -42,6 +47,7 @@ const items = [
     price: 3600,
     imageSRC: images["cortapasto.jpg"].default,
     category: "slightly",
+    stock: 75,
   },
   {
     title: "Fingerless boots",
@@ -51,6 +57,7 @@ const items = [
     price: 1400,
     imageSRC: images["boots.jpg"].default,
     category: "completely",
+    stock: 45,
   },
   {
     title: "Modular door",
@@ -60,6 +67,7 @@ const items = [
     price: 2300,
     imageSRC: images["modularDoor.jpg"].default,
     category: "completely",
+    stock: 48,
   },
   {
     title: "Twin glasses",
@@ -68,6 +76,7 @@ const items = [
     price: 7250,
     imageSRC: images["glass.jpg"].default,
     category: "completely",
+    stock: 59,
   },
   {
     title: "Hoursalt and Hourpepper",
@@ -76,6 +85,7 @@ const items = [
     price: 300,
     imageSRC: images["sp.jpg"].default,
     category: "slightly",
+    stock: 26,
   },
 ];
 

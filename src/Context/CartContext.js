@@ -31,13 +31,24 @@ export function CartProvider({ children }) {
     return false;
   };
 
+  const clearAll = () => {
+    items.length = 0;
+  };
+
+  const totalCartItems = () => {
+    let total = 0;
+    items.map((item) => (total += item.quantity));
+    return total;
+  };
+
   return (
     <CartContext.Provider
       value={{
         items,
         addCartItem,
         removeItem,
-        itemsQuantity: items.length,
+        clearAll,
+        itemsQuantity: totalCartItems(),
       }}
     >
       {children}

@@ -13,9 +13,13 @@ const ItemListContainer = ({ greeting }) => {
     const fetchProducts = () =>
       new Promise((resolve, reject) => {
         setIsLoading(true);
-        setTimeout(() => {
-          return resolve(getItems(category));
-        }, 2000);
+        setTimeout(
+          () => {
+            return resolve(getItems(category));
+          },
+          // 2000
+          1500
+        );
       });
 
     fetchProducts().then((newProducts) => {

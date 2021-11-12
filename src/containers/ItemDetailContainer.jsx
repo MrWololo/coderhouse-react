@@ -12,10 +12,14 @@ const ItemDetailContainer = () => {
   useEffect(() => {
     const fetchItem = () =>
       new Promise((resolve, reject) => {
-        setTimeout(() => {
-          const item = getItem(id)
-          return resolve(item);
-        }, 2000);
+        setTimeout(
+          () => {
+            const item = getItem(id);
+            return resolve(item);
+          },
+          // 2000 // not anymore
+          1500
+        );
       });
 
     fetchItem().then((newItem) => {

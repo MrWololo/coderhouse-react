@@ -6,7 +6,7 @@ function importAll(r) {
   return images;
 }
 
-const images = importAll(
+export const images = importAll(
   require.context("../images", false, /\.(png|jpe?g|svg)$/)
 );
 
@@ -72,7 +72,7 @@ const items = [
   {
     title: "Twin glasses",
     id: 7,
-    description: "A lovers delight",
+    description: "A lover's delight",
     price: 7250,
     imageSRC: images["glass.jpg"].default,
     category: "completely",

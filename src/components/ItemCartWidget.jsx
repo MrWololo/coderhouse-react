@@ -30,28 +30,14 @@ const ItemCartWidget = ({
         //Solo puedo pedir perdón por esta clase, estaba desfazado por 1px
         //TODO: change counter layout with an array of React elements, push new button to first for fix
         className={`btn btn-primary ${
-          fullyShown && !isInCart ? "rounded-t-none rounded-br-none" : ""
-        } ${
-          isInCart ? "group-hover:hidden" : "relative left-[-1px]"
-        } ${isInCart && isActive ? "hidden" : ""} ${
-          isInCart && fullyShown ? "absolute" : ""
-        } `}
+          fullyShown ? "rounded-t-none rounded-br-none" : ""
+        }  ${isInCart ? "hidden" : ""}  `}
         onClick={(e) => {
           e.preventDefault();
-          // if (
           addItemCart(item, quantity);
-          // ) {
-          //   setItemStock(item.stock - quantity);
-          // }
         }}
         onTouchEnd={(e) => {
-          // if (
-          // e.preventDefault();
           isInCart ? addItemCart(item, quantity) : setActive(true);
-          // setPressed(true);
-          //   ) {
-          //   setItemStock(item.stock - quantity);
-          // }
         }}
       >
         {isInCart ? "Modify from cart" : "Add to cart"}

@@ -4,7 +4,7 @@ import ItemCartWidget from "./ItemCartWidget";
 import Loading from "./Loading";
 // import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
-const Item = ({ item, fullyShown = true }) => {
+const Item = ({ item, fullyShown = true, isCompact = false }) => {
   const { title, description, price, imageSRC, stock } = item.data;
 
   const { getCartItemQuantity, modifyCartItemQuantity } = useContext(
@@ -52,59 +52,78 @@ const Item = ({ item, fullyShown = true }) => {
   };
 
   return (
-    <div
-      className={` max-w-5xl ${fullyShown ? "sm:m-auto" : "group mb-2"}`}
-      onTouchEnd={(e) => {
-        if (!isActive) {
-          e.preventDefault();
-          e.stopPropagation();
-          setActive(!isActive);
-        }
-      }}
-      onMouseEnter={() => setActive(fullyShown ? false : true)}
-      onMouseLeave={() => setActive(false)}
-    >
+    <div>
+      <div className={`${isLoading ? "" : "hidden"}`}>
+        <Loading />
+      </div>
       <div
-        className={`card shadow-xl hover:shadow-2xl sm:flex-row ${
-          isActive && !fullyShown ? "image-full" : ""
-        }
-        ${fullyShown ? "bordered" : ""}
-        `}
+        className={` ${isCompact ? "" : "max-w-5xl"}  ${
+          fullyShown ? "sm:m-auto" : "group mb-2"
+        }`}
+        onTouchEnd={(e) => {
+          if (!isActive) {
+            e.preventDefault();
+            e.stopPropagation();
+            setActive(!isActive);
+          }
+        }}
+        onMouseEnter={() => setActive(fullyShown ? false : true)}
+        onMouseLeave={() => setActive(false)}
       >
-        <figure className={`${fullyShown ? "max-w-lg m-auto" : ""}`}>
-          <div className={`${isLoading ? "block" : "hidden"}`}>
-            <Loading />
-          </div>
-          <img src={imageSRC} alt={title} onLoad={() => loadingSwitcher()} />
-        </figure>
-
         <div
-          className={`card-body ${isActive || fullyShown ? "" : "hidden"}
-          ${!fullyShown ? "justify-end group-hover:flex" : "justify-between"}
+          className={`card shadow-xl hover:shadow-2xl ${
+            isCompact ? "flex-row" : "sm:flex-row"
+          } ${isActive && !fullyShown ? "image-full" : ""}
+          ${fullyShown ? "bordered" : ""}
           `}
         >
-          <div>
-            <h2 className="card-title">{title}</h2>
-            <p>{description}</p>
-          </div>
-          {/* acá va el resto */}
-          <div
-            className={`card-actions ${
-              fullyShown ? "sm:flex-col-reverse" : ""
-            } lg:flex-row`}
+          <figure
+            className={`${fullyShown && !isCompact ? "max-w-lg mx-auto" : ""} ${
+              isCompact ? "max-w-xs" : ""
+            }`}
           >
-            <ItemCartWidget
-              setItemStock={setItemStock}
-              fullyShown={fullyShown}
-              item={item}
-              quantity={quantity}
-              quantityPlus={quantityPlus}
-              quantityMinus={quantityMinus}
-              isActive={isActive}
-              setActive={setActive}
+            <img
+              className="h-full object-cover"
+              src={imageSRC}
+              alt={title}
+              onLoad={() => loadingSwitcher()}
             />
-
-            <h1 className="text-3xl m-auto">${calculatedPrice}</h1>
+          </figure>
+          <div
+            className={`card-body ${isActive || fullyShown ? "" : "hidden"}
+            ${!fullyShown ? "justify-end group-hover:flex" : "justify-between"}
+            `}
+          >
+            {isCompact ? (
+              <h2 className="card-title">{title}</h2>
+            ) : (
+              <div>
+                <h2 className="card-title">{title}</h2>
+                <p>{description}</p>
+              </div>
+            )}
+            {/* acá va el resto */}
+            <div
+              className={`card-actions ${
+                fullyShown && !isCompact
+                  ? "sm:flex-col-reverse lg:flex-row"
+                  : ""
+              } ${isCompact ? "flex-col-reverse " : ""} `}
+            >
+              <ItemCartWidget
+                setItemStock={setItemStock}
+                fullyShown={fullyShown}
+                item={item}
+                quantity={quantity}
+                quantityPlus={quantityPlus}
+                quantityMinus={quantityMinus}
+                isActive={isActive}
+                setActive={setActive}
+              />
+              <h1 className={` m-auto ${isCompact ? "mb-2 text-2xl" : "text-3xl"}`}>
+                ${calculatedPrice}
+              </h1>
+            </div>
           </div>
         </div>
       </div>

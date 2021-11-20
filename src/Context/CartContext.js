@@ -5,6 +5,11 @@ export const CartContext = createContext();
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
 
+  const getAllCartItems = () => {
+    if (items.length > 0) return items;
+    return false;
+  };
+
   const getCartItem = (itemID) =>
     items.find((element) => element.item.id === itemID);
 
@@ -76,7 +81,7 @@ export function CartProvider({ children }) {
   return (
     <CartContext.Provider
       value={{
-        items,
+        getAllCartItems,
         addItemCart,
         getCartItemQuantity,
         removeItem,

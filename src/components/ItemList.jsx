@@ -1,9 +1,8 @@
-import { Text } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import Item from "./Item";
 
 const ItemList = ({ products }) => {
-  if (!products) return <Text>No se encuentran productos</Text>;
+  if (!products) return <p>No se encuentran productos</p>;
   return (
     <div className="customColumn m-2">
       {products.map((product) => {

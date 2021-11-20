@@ -41,6 +41,10 @@
   columns: 300px;
 }
 
+.cartColumn{
+  columns: 400px 2;
+}
+
 .darkFAB {
   z-index: 999;
 }

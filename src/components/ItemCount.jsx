@@ -10,9 +10,9 @@ const ItemCount = ({
 }) => {
   return (
     <div
-      className={`btn-group ${
+      className={`btn-group flex-nowrap ${
         fullyShown || (isActive && isInCart) ? "" : "hidden"
-      }`}
+      } `}
     >
       <button
         className={`${

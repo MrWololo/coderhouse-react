@@ -1,18 +1,24 @@
 import { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import ItemCartWidget from "./ItemCartWidget";
+import Loading from "./Loading";
 // import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
 const Item = ({ item, fullyShown = true }) => {
-  const { title, description, price, imageSRC, stock } = item;
+  const { title, description, price, imageSRC, stock } = item.data;
 
   const { getCartItemQuantity, modifyCartItemQuantity } = useContext(
     CartContext
   );
 
-  const [isActive, setActive] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const loadingSwitcher = () => {
+    if (isLoading) {
+      setLoading(false);
+    }
+  };
 
-  // console.log(getCartItemQuantity(item.id));
+  const [isActive, setActive] = useState(false);
 
   const [itemStock, setItemStock] = useState(stock);
   const [quantity, setQuantity] = useState(
@@ -20,17 +26,14 @@ const Item = ({ item, fullyShown = true }) => {
   );
   const [calculatedPrice, setCalculatedPrice] = useState(price);
 
-  // console.log(itemStock);
-
   const quantityMinus = (clear = false) => {
-    // console.log(clear)
     if (clear) {
       modifyCartItemQuantity(item.id, 0);
       setQuantity(1);
       calculatePrice(1);
     } else {
       if (quantity !== 1) {
-        console.log(modifyCartItemQuantity(item.id, quantity - 1));
+        modifyCartItemQuantity(item.id, quantity - 1);
         setQuantity(quantity - 1);
         calculatePrice(quantity - 1);
       }
@@ -38,7 +41,7 @@ const Item = ({ item, fullyShown = true }) => {
   };
   const quantityPlus = () => {
     if (quantity + 1 < itemStock + 1) {
-      console.log(modifyCartItemQuantity(item.id, quantity + 1));
+      modifyCartItemQuantity(item.id, quantity + 1);
       setQuantity(quantity + 1);
       calculatePrice(quantity + 1);
     }
@@ -69,7 +72,10 @@ const Item = ({ item, fullyShown = true }) => {
         `}
       >
         <figure className={`${fullyShown ? "max-w-lg m-auto" : ""}`}>
-          <img src={imageSRC} alt={title} />
+          <div className={`${isLoading ? "block" : "hidden"}`}>
+            <Loading />
+          </div>
+          <img src={imageSRC} alt={title} onLoad={() => loadingSwitcher()} />
         </figure>
 
         <div
@@ -95,6 +101,7 @@ const Item = ({ item, fullyShown = true }) => {
               quantityPlus={quantityPlus}
               quantityMinus={quantityMinus}
               isActive={isActive}
+              setActive={setActive}
             />
 
             <h1 className="text-3xl m-auto">${calculatedPrice}</h1>

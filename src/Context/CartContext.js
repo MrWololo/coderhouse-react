@@ -16,7 +16,6 @@ export function CartProvider({ children }) {
   const addItemCart = (item, quantity = 1) => {
     if (!hasItem(item.id)) {
       setItems([...items, { item: item, quantity: quantity }]);
-      // console.log(items);
       return true;
     }
     return false;
@@ -25,8 +24,11 @@ export function CartProvider({ children }) {
   const removeItem = (itemID) => {
     if (hasItem(itemID)) {
       if (items.length > 1) {
-        const id = items.findIndex((element) => element.item.id === itemID);
-        setItems([...items.splice(id, 1)]);
+        setItems(
+          items.filter((element) => {
+            return element.item.id !== itemID;
+          })
+        );
       } else {
         clearAll();
       }

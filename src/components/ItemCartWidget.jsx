@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import ItemCount from "./ItemCount";
 
@@ -6,10 +6,10 @@ const ItemCartWidget = ({
   fullyShown,
   item,
   quantity,
-  setItemStock,
   quantityPlus,
   quantityMinus,
   isActive,
+  setActive,
 }) => {
   const { addItemCart, getCartItemQuantity } = useContext(CartContext);
 
@@ -27,12 +27,15 @@ const ItemCartWidget = ({
         isActive={isActive}
       />
       <button
+        //Solo puedo pedir perdón por esta clase, estaba desfazado por 1px
+        //TODO: change counter layout with an array of React elements, push new button to first for fix
         className={`btn btn-primary ${
-          (console.log(isActive),
-          fullyShown && !isInCart ? "rounded-t-none rounded-br-none" : " ")
-        } ${isInCart ? "group-hover:hidden" : ""} ${
-          isInCart && isActive ? "hidden" : ""
-        } ${isInCart && fullyShown ? "absolute" : ""} `}
+          fullyShown && !isInCart ? "rounded-t-none rounded-br-none" : ""
+        } ${
+          isInCart ? "group-hover:hidden" : "relative left-[-1px]"
+        } ${isInCart && isActive ? "hidden" : ""} ${
+          isInCart && fullyShown ? "absolute" : ""
+        } `}
         onClick={(e) => {
           e.preventDefault();
           // if (
@@ -43,8 +46,8 @@ const ItemCartWidget = ({
         }}
         onTouchEnd={(e) => {
           // if (
-          e.preventDefault();
-          addItemCart(item, quantity);
+          // e.preventDefault();
+          isInCart ? addItemCart(item, quantity) : setActive(true);
           // setPressed(true);
           //   ) {
           //   setItemStock(item.stock - quantity);

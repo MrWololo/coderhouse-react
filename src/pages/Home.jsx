@@ -8,17 +8,13 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { themeChange } from "theme-change";
 import NavbarItems from "../components/NavbarItems.jsx";
-import { getItemsIDs, getItemsCategories } from "../modules/Items.js";
-import { Redirect } from "react-router-dom/cjs/react-router-dom";
+// import { getItemsIDs, getItemsCategories } from "../modules/Items.js";
 import CartContainer from "../containers/CartContainer.jsx";
 
 const Home = () => {
   useEffect(() => {
     themeChange(false);
   }, []);
-
-  const itemsIDs = getItemsIDs();
-  const itemsCategories = getItemsCategories();
 
   return (
     <BrowserRouter>
@@ -28,34 +24,8 @@ const Home = () => {
           <NavBar />
           <Switch>
             <Route exact path="/" component={ItemListContainer} />
-            <Route
-              path="/item/:id"
-              render={({ location, match }) => {
-                return itemsIDs.find(
-                  (id) => parseInt(match.params["id"]) === id
-                ) ? (
-                  <ItemDetailContainer />
-                ) : (
-                  <Redirect
-                    to={{ pathname: "/404", state: { from: location } }}
-                  />
-                );
-              }}
-            />
-            <Route
-              path="/categories/:category"
-              render={({ location, match }) => {
-                return itemsCategories.find(
-                  (category) => match.params["category"] === category
-                ) ? (
-                  <ItemListContainer />
-                ) : (
-                  <Redirect
-                    to={{ pathname: "/404", state: { from: location } }}
-                  />
-                );
-              }}
-            />
+            <Route path="/item/:id" component={ItemDetailContainer} />
+            <Route path="/categories/:category" component={ItemListContainer} />
             <Route path="/cart" component={CartContainer} />
             <Route path="*" component={FourOhFour} />
           </Switch>

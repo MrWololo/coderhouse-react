@@ -1,34 +1,33 @@
 import { useEffect, useState } from "react";
-import { getItems } from "../modules/Items";
+import { getItems } from "../modules/firestoreRequests";
 import ItemList from "../components/ItemList";
 import Loading from "../components/Loading";
-import { useParams } from "react-router-dom/cjs/react-router-dom";
+import { useParams, Redirect } from "react-router-dom/cjs/react-router-dom";
 
 const ItemListContainer = ({ greeting }) => {
   const { category } = useParams();
   const [products, setProducts] = useState([]);
+  const [redirect, setRedirect] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProducts = () =>
-      new Promise((resolve, reject) => {
-        setIsLoading(true);
-        setTimeout(
-          () => {
-            return resolve(getItems(category));
-          },
-          // 2000
-          1500
-        );
-      });
+    const fetchItems = async () => {
+      return await getItems(category);
+    };
 
-    fetchProducts().then((newProducts) => {
-      setProducts(newProducts);
-      setIsLoading(false);
+    fetchItems().then((newProducts) => {
+      if (newProducts === false) {
+        setRedirect(true);
+      } else {
+        setProducts(newProducts);
+        setIsLoading(false);
+      }
     });
   }, [category]);
 
-  return (
+  return redirect ? (
+    <Redirect to={{ pathname: "/404" }} />
+  ) : (
     <div className="mx-2 sm:m-auto text-center max-w-7xl">
       {greeting || (
         <h2>

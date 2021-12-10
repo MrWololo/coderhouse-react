@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import Loading from "../components/Loading";
-import { itemExistsThenGet } from "../modules/firestoreRequests";
+import { getItem } from "../modules/firestoreRequests";
 import ItemDetail from "../components/ItemDetail";
 
 const ItemDetailContainer = () => {
@@ -12,7 +12,7 @@ const ItemDetailContainer = () => {
 
   useEffect(() => {
     const fetchItem = async () => {
-      return itemExistsThenGet(id);
+      return getItem(id);
     };
 
     fetchItem().then((newItem) => {

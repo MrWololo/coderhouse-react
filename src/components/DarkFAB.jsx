@@ -6,13 +6,15 @@ const DarkFAB = () => {
 
   return (
     <button
-      data-set-theme={theme !== "bumblebee" ? "bumblebee" : "dracula"}
-      className="btn btn-primary btn-circle fixed bottom-5 right-10 darkFAB"
+      data-set-theme={theme !== "cupcake" ? "cupcake" : "dracula"}
+      className="btn btn-primary btn-circle fixed bottom-1 right-2 sm:bottom-5 sm:right-10 darkFAB"
       onClick={() => {
-        setTheme(theme === "bumblebee" ? "dracula" : "bumblebee");
+        setTheme((currentValue) =>
+          currentValue === "cupcake" ? "dracula" : "cupcake"
+        );
       }}
     >
-      {theme !== "bumblebee" ? (
+      {theme !== "cupcake" ? (
         <MdLightMode className="text-xl" />
       ) : (
         <MdDarkMode className="text-xl" />

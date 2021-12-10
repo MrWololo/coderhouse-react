@@ -32,19 +32,30 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-.customColumn{
+.customColumn {
   columns: 300px;
 }
 
-.cartColumn{
+.cartColumn {
   columns: 400px 2;
 }
 
+.fixForChrome {
+  -webkit-column-break-inside: avoid;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.break-anywhere {
+  overflow-wrap: anywhere;
+}
+
 .darkFAB {
-  z-index: 999;
+  z-index: 30;
 }

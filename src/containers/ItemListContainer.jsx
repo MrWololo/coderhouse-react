@@ -28,11 +28,11 @@ const ItemListContainer = ({ greeting }) => {
   return redirect ? (
     <Redirect to={{ pathname: "/404" }} />
   ) : (
-    <div className="mx-2 sm:m-auto text-center max-w-7xl">
+    <div className="mx-2 sm:mx-auto text-center max-w-7xl">
       {greeting || (
         <h2>
           A curated selection of useless items made for{" "}
-          <span className="text-primary primary font-semibold">U</span>
+          <span className="text-primary font-semibold">U</span>
         </h2>
       )}
       {isLoading ? <Loading /> : <ItemList products={products} />}

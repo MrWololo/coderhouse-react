@@ -22,6 +22,7 @@ const Home = () => {
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           <NavBar />
+          <DarkFAB />
           <Switch>
             <Route exact path="/" component={ItemListContainer} />
             <Route path="/item/:id" component={ItemDetailContainer} />
@@ -29,7 +30,7 @@ const Home = () => {
             <Route path="/cart" component={CartContainer} />
             <Route path="*" component={FourOhFour} />
           </Switch>
-          <DarkFAB />
+          
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer" className="drawer-overlay"></label>

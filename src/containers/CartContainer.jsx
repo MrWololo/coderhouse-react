@@ -1,13 +1,21 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
-import Item from "../components/Item";
 import { Link } from "react-router-dom";
+import Item from "../components/Item";
+import StepsModalContainer from "./StepsModalContainer";
 
 const CartContainer = () => {
-  const { getAllCartItems } = useContext(CartContext);
+  const { getAllCartItems, totalItemsPrice } = useContext(CartContext);
   const cartItems = getAllCartItems();
 
-  if (!cartItems)
+  const [total, setTotal] = useState(0);
+
+  const [openState, setOpenState] = useState(false);
+  const switchModal = () => {
+    setOpenState((currentValue) => !currentValue);
+  };
+
+  if (!cartItems) {
     return (
       <div className="text-center">
         There's nothing here...{" "}
@@ -16,33 +24,47 @@ const CartContainer = () => {
         </Link>
       </div>
     );
+  } else {
+    setTotal(totalItemsPrice());
 
-  return (
-    <div className="max-w-7xl lg:m-auto">
-      <div className="mx-2  text-center cartColumn m-2">
-        {cartItems.map((cartItem) => {
-          return (
-            <div className="m-2">
-              <Item
-                key={cartItem.item.id}
-                item={cartItem.item}
-                fullyShown={true}
-                isCompact={true}
-              />
+    return (
+      <div className="max-w-7xl lg:m-auto">
+        <div className="mx-2 text-center cartColumn m-2">
+          {cartItems.map((cartItem) => {
+            return (
+              <div className="m-2">
+                <Item
+                  key={cartItem.item.id}
+                  item={cartItem.item}
+                  fullyShown={true}
+                  isCompact={true}
+                />
+              </div>
+            );
+          })}
+        </div>
+        <div className="sticky bottom-0 bg-base-100 outline">
+          <div className="flex flex-col my-3 mx-3 max-w-min">
+            <div className="text-xl mb-1 text-center font-semibold">
+              Total: ${total}
             </div>
-          );
-        })}
+            <label
+              className="btn btn-primary btn-wide modal-button"
+              for="modal"
+              onClick={(e) => {
+                e.preventDefault();
+                switchModal();
+              }}
+            >
+              Buy now
+            </label>
+          </div>
+          <input type="checkbox" id="modal" className="modal-toggle" />
+          <StepsModalContainer openState={openState} switchModal={switchModal} />
+        </div>
       </div>
-      <div className="sticky bottom-0 z-50 bg-base-100">
-        <button
-          className="btn btn-primary btn-wide rounded-full my-2 mx-3"
-          onClick={() => {}}
-        >
-          Buy now
-        </button>
-      </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default CartContainer;

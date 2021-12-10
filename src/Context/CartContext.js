@@ -20,7 +20,10 @@ export function CartProvider({ children }) {
 
   const addItemCart = (item, quantity = 1) => {
     if (!hasItem(item.id)) {
-      setItems([...items, { item: item, quantity: quantity }]);
+      setItems((currentValue) => [
+        ...currentValue,
+        { item: item, quantity: quantity },
+      ]);
       return true;
     }
     return false;
@@ -29,8 +32,8 @@ export function CartProvider({ children }) {
   const removeItem = (itemID) => {
     if (hasItem(itemID)) {
       if (items.length > 1) {
-        setItems(
-          items.filter((element) => {
+        setItems((currentValue) =>
+          currentValue.filter((element) => {
             return element.item.id !== itemID;
           })
         );
@@ -53,6 +56,13 @@ export function CartProvider({ children }) {
     return total;
   };
 
+  const totalItemsPrice = () =>
+    items
+      .map((value) => {
+        return value.item.data.price * value.quantity;
+      })
+      .reduce((prev, value) => prev + value, 0);
+
   const getCartItemQuantity = (itemID) => {
     if (hasItem(itemID)) {
       return items.find((element) => element.item.id === itemID).quantity;
@@ -65,8 +75,8 @@ export function CartProvider({ children }) {
       if (updatedQuantity === 0) {
         removeItem(itemID);
       } else {
-        setItems(
-          items.map((element) => {
+        setItems((currentValue) =>
+          currentValue.map((element) => {
             return element.item.id === itemID
               ? { ...element, quantity: updatedQuantity }
               : element;
@@ -88,6 +98,7 @@ export function CartProvider({ children }) {
         clearAll,
         modifyCartItemQuantity,
         totalCartItems,
+        totalItemsPrice,
       }}
     >
       {children}
